@@ -1,4 +1,7 @@
-# Calendar UI
+# dev.dashaun.ui.calendar
+
+## See also: [dev.dashaun.service.calendar](https://github.com/dashaun/dev.dashaun.service.calendar)
+
 
 This project can be used as a starting point to create your own Vaadin application with Spring Boot.
 It contains all the necessary configuration and some placeholder files to get you started.
