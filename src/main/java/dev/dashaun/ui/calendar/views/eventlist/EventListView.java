@@ -13,33 +13,37 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import dev.dashaun.ui.calendar.client.CalendarClient;
+import dev.dashaun.ui.calendar.views.Event;
 import dev.dashaun.ui.calendar.views.MainLayout;
-import java.util.Arrays;
-import java.util.List;
+
+import java.text.SimpleDateFormat;
 
 @PageTitle("Event List")
 @Route(value = "event-list", layout = MainLayout.class)
 public class EventListView extends Div implements AfterNavigationObserver {
 
-    Grid<Person> grid = new Grid<>();
+    private final CalendarClient calendarClient;
+    Grid<Event> grid = new Grid<>();
 
-    public EventListView() {
+    public EventListView(CalendarClient calendarClient) {
+        this.calendarClient = calendarClient;
         addClassName("event-list-view");
         setSizeFull();
         grid.setHeight("100%");
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
-        grid.addComponentColumn(person -> createCard(person));
+        grid.addComponentColumn(this::createCard);
         add(grid);
     }
 
-    private HorizontalLayout createCard(Person person) {
+    private HorizontalLayout createCard(Event event) {
         HorizontalLayout card = new HorizontalLayout();
         card.addClassName("card");
         card.setSpacing(false);
         card.getThemeList().add("spacing-s");
 
         Image image = new Image();
-        image.setSrc(person.getImage());
+        image.setSrc("");
         VerticalLayout description = new VerticalLayout();
         description.addClassName("description");
         description.setSpacing(false);
@@ -50,14 +54,15 @@ public class EventListView extends Div implements AfterNavigationObserver {
         header.setSpacing(false);
         header.getThemeList().add("spacing-s");
 
-        Span name = new Span(person.getName());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Span name = new Span(event.getName());
         name.addClassName("name");
-        Span date = new Span(person.getDate());
+        Span date = new Span(sdf.format(event.getStartDate()));
         date.addClassName("date");
         header.add(name, date);
 
-        Span post = new Span(person.getPost());
-        post.addClassName("post");
+        Span post = new Span(event.getContent());
+        post.addClassName("content");
 
         HorizontalLayout actions = new HorizontalLayout();
         actions.addClassName("actions");
@@ -66,15 +71,15 @@ public class EventListView extends Div implements AfterNavigationObserver {
 
         Icon likeIcon = VaadinIcon.HEART.create();
         likeIcon.addClassName("icon");
-        Span likes = new Span(person.getLikes());
+        Span likes = new Span("");
         likes.addClassName("likes");
         Icon commentIcon = VaadinIcon.COMMENT.create();
         commentIcon.addClassName("icon");
-        Span comments = new Span(person.getComments());
+        Span comments = new Span("");
         comments.addClassName("comments");
         Icon shareIcon = VaadinIcon.CONNECT.create();
         shareIcon.addClassName("icon");
-        Span shares = new Span(person.getShares());
+        Span shares = new Span("");
         shares.addClassName("shares");
 
         actions.add(likeIcon, likes, commentIcon, comments, shareIcon, shares);
@@ -86,72 +91,8 @@ public class EventListView extends Div implements AfterNavigationObserver {
 
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
-
-        // Set some data when this view is displayed.
-        List<Person> persons = Arrays.asList( //
-                createPerson("https://randomuser.me/api/portraits/men/42.jpg", "John Smith", "May 8",
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/42.jpg", "Abagail Libbie", "May 3",
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/men/24.jpg", "Alberto Raya", "May 3",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/24.jpg", "Emmy Elsner", "Apr 22",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/men/76.jpg", "Alf Huncoot", "Apr 21",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/76.jpg", "Lidmila Vilensky", "Apr 17",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/men/94.jpg", "Jarrett Cawsey", "Apr 17",
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/94.jpg", "Tania Perfilyeva", "Mar 8",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/men/16.jpg", "Ivan Polo", "Mar 5",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/16.jpg", "Emelda Scandroot", "Mar 5",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/men/67.jpg", "Marcos Sá", "Mar 4",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20"),
-                createPerson("https://randomuser.me/api/portraits/women/67.jpg", "Jacqueline Asong", "Mar 2",
-
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking).",
-                        "1K", "500", "20")
-
-        );
-
-        grid.setItems(persons);
+        grid.setItems(calendarClient.getEvents());
     }
-
-    private static Person createPerson(String image, String name, String date, String post, String likes,
-            String comments, String shares) {
-        Person p = new Person();
-        p.setImage(image);
-        p.setName(name);
-        p.setDate(date);
-        p.setPost(post);
-        p.setLikes(likes);
-        p.setComments(comments);
-        p.setShares(shares);
-
-        return p;
-    }
+    
 
 }
