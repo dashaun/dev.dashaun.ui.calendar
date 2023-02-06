@@ -22,3 +22,17 @@ webpack.generated.js
 
 node
 frontend/index.html
+
+# stuff that seems to be regenerated on each build...
+dev-bundle/
+#frontend/
+package-lock.json
+package.json
+tsconfig.json
+types.d.ts
+vite.config.ts
+
+.npmrc
+.prettierrc.js
+Dockerfile
+kubernetes.yaml
