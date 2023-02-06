@@ -26,56 +26,61 @@ import dev.dashaun.ui.calendar.views.MainLayout;
 @Uses(Icon.class)
 public class EventFormView extends Div {
 
-    private final TextField name = new TextField("Name");
-    private final DatePicker startDate = new DatePicker("Start");
-    private final DatePicker endDate = new DatePicker("End");
-    private final TextField url = new TextField("URL");
-    private final TextField content = new TextField("Info");
+	private final TextField name = new TextField("Name");
 
-    private final Button cancel = new Button("Cancel");
-    private final Button save = new Button("Save");
+	private final DatePicker startDate = new DatePicker("Start");
 
-    private final Binder<Event> binder = new Binder<>(Event.class);
+	private final DatePicker endDate = new DatePicker("End");
 
-    public EventFormView(CalendarClient calendarClient) {
-        addClassName("event-form-view");
+	private final TextField url = new TextField("URL");
 
-        add(createTitle());
-        add(createFormLayout());
-        add(createButtonLayout());
+	private final TextField content = new TextField("Info");
 
-        binder.bindInstanceFields(this);
-        clearForm();
+	private final Button cancel = new Button("Cancel");
 
-        cancel.addClickListener(e -> clearForm());
-        save.addClickListener(e -> {
-            calendarClient.createEvent(binder.getBean());
-            Notification.show(binder.getBean().getClass().getSimpleName() + " details stored.");
-            clearForm();
-        });
-    }
+	private final Button save = new Button("Save");
 
-    private void clearForm() {
-        binder.setBean(new Event());
-    }
+	private final Binder<Event> binder = new Binder<>(Event.class);
 
-    private Component createTitle() {
-        return new H3("Calendar Event");
-    }
+	public EventFormView(CalendarClient calendarClient) {
+		addClassName("event-form-view");
 
-    private Component createFormLayout() {
-        FormLayout formLayout = new FormLayout();
-        formLayout.add(startDate, endDate, name, url, content);
-        return formLayout;
-    }
+		add(createTitle());
+		add(createFormLayout());
+		add(createButtonLayout());
 
-    private Component createButtonLayout() {
-        HorizontalLayout buttonLayout = new HorizontalLayout();
-        buttonLayout.addClassName("button-layout");
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonLayout.add(save);
-        buttonLayout.add(cancel);
-        return buttonLayout;
-    }
+		binder.bindInstanceFields(this);
+		clearForm();
+
+		cancel.addClickListener(e -> clearForm());
+		save.addClickListener(e -> {
+			calendarClient.createEvent(binder.getBean());
+			Notification.show(binder.getBean().getClass().getSimpleName() + " details stored.");
+			clearForm();
+		});
+	}
+
+	private void clearForm() {
+		binder.setBean(new Event());
+	}
+
+	private Component createTitle() {
+		return new H3("Calendar Event");
+	}
+
+	private Component createFormLayout() {
+		FormLayout formLayout = new FormLayout();
+		formLayout.add(startDate, endDate, name, url, content);
+		return formLayout;
+	}
+
+	private Component createButtonLayout() {
+		HorizontalLayout buttonLayout = new HorizontalLayout();
+		buttonLayout.addClassName("button-layout");
+		save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+		buttonLayout.add(save);
+		buttonLayout.add(cancel);
+		return buttonLayout;
+	}
 
 }

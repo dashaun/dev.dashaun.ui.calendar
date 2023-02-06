@@ -10,18 +10,20 @@ import org.springframework.web.service.annotation.PostExchange;
 import java.util.List;
 
 public interface CalendarClient {
-    @PostExchange("/api/events/")
-    Event createEvent(@RequestBody Event event);
-    
-    @GetExchange("/api/events/")
-    List<Event> getEvents();
-    
-    @GetExchange("/api/events/{id}")
-    Event getEventById(@PathVariable String id);
-    
-    @DeleteExchange("/api/events/{id}")
-    void deleteEventById(@PathVariable String id);
-    
-    @GetExchange("/actuator/health")
-    String serviceHealth();
+
+	@PostExchange("/api/events/")
+	Event createEvent(@RequestBody Event event);
+
+	@GetExchange("/api/events/")
+	List<Event> getEvents();
+
+	@GetExchange("/api/events/{id}")
+	Event getEventById(@PathVariable String id);
+
+	@DeleteExchange("/api/events/{id}")
+	void deleteEventById(@PathVariable String id);
+
+	@GetExchange("/actuator/health")
+	String serviceHealth();
+
 }

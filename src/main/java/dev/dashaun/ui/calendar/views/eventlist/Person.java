@@ -2,70 +2,77 @@ package dev.dashaun.ui.calendar.views.eventlist;
 
 public class Person {
 
-    private String image;
-    private String name;
-    private String date;
-    private String post;
-    private String likes;
-    private String comments;
-    private String shares;
+	private String image;
 
-    public Person() {
-    }
+	private String name;
 
-    public String getImage() {
-        return image;
-    }
+	private String date;
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+	private String post;
 
-    public String getName() {
-        return name;
-    }
+	private String likes;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private String comments;
 
-    public String getDate() {
-        return date;
-    }
+	private String shares;
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+	public Person() {
+	}
 
-    public String getPost() {
-        return post;
-    }
+	public String getImage() {
+		return image;
+	}
 
-    public void setPost(String post) {
-        this.post = post;
-    }
+	public void setImage(String image) {
+		this.image = image;
+	}
 
-    public String getLikes() {
-        return likes;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setLikes(String likes) {
-        this.likes = likes;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getComments() {
-        return comments;
-    }
+	public String getDate() {
+		return date;
+	}
 
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
+	public void setDate(String date) {
+		this.date = date;
+	}
 
-    public String getShares() {
-        return shares;
-    }
+	public String getPost() {
+		return post;
+	}
 
-    public void setShares(String shares) {
-        this.shares = shares;
-    }
+	public void setPost(String post) {
+		this.post = post;
+	}
+
+	public String getLikes() {
+		return likes;
+	}
+
+	public void setLikes(String likes) {
+		this.likes = likes;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getShares() {
+		return shares;
+	}
+
+	public void setShares(String shares) {
+		this.shares = shares;
+	}
+
 }

@@ -12,27 +12,25 @@ import java.time.Duration;
 
 @Configuration(proxyBeanMethods = false)
 public class ClientConfig {
-    private final ConfigProps configProps;
 
-    public ClientConfig(ConfigProps configProps) {
-        this.configProps = configProps;
-    }
+	private final ConfigProps configProps;
 
-    @Bean
-    public HttpServiceProxyFactory httpServiceProxyFactory() {
-        HttpClient httpClient = HttpClient.create()
-                .responseTimeout(Duration.ofSeconds(30));
+	public ClientConfig(ConfigProps configProps) {
+		this.configProps = configProps;
+	}
 
-        WebClient client = WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
-                .baseUrl(configProps.url())
-                .defaultHeader("Content-Type", "application/json")
-                .build();
-        return HttpServiceProxyFactory.builder(WebClientAdapter.forClient(client)).build();
-    }
+	@Bean
+	public HttpServiceProxyFactory httpServiceProxyFactory() {
+		HttpClient httpClient = HttpClient.create().responseTimeout(Duration.ofSeconds(30));
 
-    @Bean
-    public CalendarClient foreFrontClient(HttpServiceProxyFactory factory) {
-        return factory.createClient(CalendarClient.class);
-    }
+		WebClient client = WebClient.builder().clientConnector(new ReactorClientHttpConnector(httpClient))
+				.baseUrl(configProps.url()).defaultHeader("Content-Type", "application/json").build();
+		return HttpServiceProxyFactory.builder(WebClientAdapter.forClient(client)).build();
+	}
+
+	@Bean
+	public CalendarClient foreFrontClient(HttpServiceProxyFactory factory) {
+		return factory.createClient(CalendarClient.class);
+	}
+
 }

@@ -36,3 +36,5 @@ vite.config.ts
 .prettierrc.js
 Dockerfile
 kubernetes.yaml
+
+.envrc
